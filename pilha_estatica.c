@@ -3,7 +3,7 @@
 
 // PILHA ESTATICA - VETORES
 
-#define MAX 15
+#define MAX 5
 
 typedef struct{
 	int elementos[MAX]; // PILHA ESTATICA
@@ -26,7 +26,7 @@ TPilha * criar_pilha(){
 // EMPILHAR ELEMENTO
 void empilhar(TPilha *ppilha, int valor){
 	int i = ppilha->topo;
-    if(i == 15)
+    if(i == 5)
     {
         printf("A pilha está cheia, não é possível empilhar.\n");
         printf("Aperte ENTER para continuar...");
@@ -69,10 +69,23 @@ void destruir_pilha(TPilha *ppilha) {
 	free(ppilha);
 }
 
+void exibir_elementos(TPilha *ppilha)
+{
+    system("clear || cls");
+    int i=0;
+    printf("A pilha possui %d elementos:\n\n",ppilha->topo);
+    for(i=0;i<ppilha->topo;i++)
+    {
+        printf("%d\t",ppilha->elementos[i]);
+    }
+    printf("\n\nAperte ENTER para continuar...");
+    getchar();
+    getchar();
+}
 int main(void) {
   int op;
   int valor;
-  int i ;
+  
   TPilha *ppilha;
 
   ppilha = criar_pilha();
@@ -83,7 +96,8 @@ int main(void) {
       printf("\n 1 - Empilhar");
       printf("\n 2 - Desempilhar");
       printf("\n 3 - Tamanho da pilha");
-      printf("\n 4 - Sair");
+      printf("\n 4 - Exibir elementos da pilha");
+      printf("\n 5 - Sair");
       printf("\n Digite a opcao: ");
       scanf("%d", &op);
 
@@ -100,11 +114,13 @@ int main(void) {
             case 3:
                 valor = tamanho(ppilha);
                 printf("\n Tamanho: %d\n", valor);
-
+                break;
+            case 4:
+                exibir_elementos(ppilha);
                 break;
       }
 
-  } while(op != 4);
+  } while(op != 5);
 
   destruir_pilha(ppilha);
 
