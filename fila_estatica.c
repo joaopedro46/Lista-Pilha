@@ -10,39 +10,93 @@ typedef struct {
 
 void iniciar(Fila *fila){
 
-	fila->primeiro = 0;
+	fila->primeiro = -1;
 	fila->ultimo = -1;
 
 }
 
 void enfileirar(Fila *fila, int valor){
-    if(fila->itens[TAM-1] )
+ 
+    if((fila->ultimo + 1)%TAM == fila->primeiro)
     {
-        printf("A fila está cheia, não é possível enfileirar.\n");
+        printf("Não é possível enfileirar, a fila está cheia.");
+        printf("Aperte ENTER para continuar...");
         getchar();
         getchar();
+        return;
+    }
+    else if(fila->ultimo == -1 && fila->primeiro == -1)
+    {
+        fila->ultimo = 0;
+        fila->primeiro = 0;
     }
     else
     {
-        fila->ultimo++;
-        fila->itens[fila->ultimo] = valor;
+        fila->ultimo = (fila->ultimo + 1) % TAM;
     }
-    
+    fila->itens[fila->ultimo] = valor;    
+
 }
 
 void desenfileirar(Fila *fila){
-    int auxiliar=0;
-    auxiliar = fila->itens[fila->primeiro];
-    fila->primeiro++;
     
+    if((fila->ultimo == -1 && fila->primeiro == -1))
+    {
+        printf("Não foi possível desenfileirar, a fila está vazia.");
+        printf("Aperte ENTER para continuar...");
+        getchar();
+        getchar();
+        return;
+    }
+    else if (fila->ultimo == fila->primeiro)
+    {
+        fila->primeiro = -1;
+        fila->ultimo = -1;
+    }
+    else
+    {
+        int auxiliar=0;
+        auxiliar = fila->itens[fila->primeiro];
+        fila->primeiro = (fila->primeiro + 1) % TAM;
+    }   
 }
 
 
 void tamanho(Fila *fila){
-    printf("\nO tamanho da fila eh %d\n",(fila->ultimo - fila->primeiro) + 1);
+
+    if(fila->ultimo == -1 && fila->primeiro == -1)
+    {
+        printf("A fila está vazia.\n");
+        printf("Aperte ENTER para continuar...");
+        getchar();
+        getchar();
+        return;
+    }
+    printf("O tamanho da fila eh: %d\n",(fila->ultimo - fila->primeiro) + 1);
+    
 }
 
-
+void exibir_elementos(Fila *fila)
+{
+    system("clear || cls");
+    if(fila->ultimo == -1 && fila->primeiro == -1)
+    {
+        printf("A fila está vazia.\n");
+    }
+    else
+    {
+        printf("A fila possui %d elementos:\n",(fila->ultimo - fila->primeiro) + 1);
+        int i;
+        for(i = fila->primeiro; i != (fila->ultimo + 1) % TAM; i = (i + 1) % TAM)
+        {
+            printf("%d\t",fila->itens[i]);
+        }
+        //printf("%d\t",fila->itens[fila->ultimo]);
+    }
+    printf("\nAperte ENTER para continuar...");
+    getchar();
+    getchar();
+}
 int main()
 {
     int opcao=-1;
@@ -61,6 +115,7 @@ int main()
             printf("1: Enfileirar\n");
             printf("2: Desenfileirar\n");
             printf("3: Tamanho\n");
+            printf("4: Exibir elementos\n");
        
             scanf("%d",&opcao);
 
@@ -82,7 +137,10 @@ int main()
             case 3:
                 tamanho(&fila);
                 break;
-
+            
+            case 4:
+                exibir_elementos(&fila);
+                break;
             case 0:
                 printf("Tchau! Ate a proxima\n");
                 break;
@@ -95,6 +153,5 @@ int main()
 
 
         }
-
     return 0;
 }
