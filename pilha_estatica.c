@@ -3,7 +3,7 @@
 
 // PILHA ESTATICA - VETORES
 
-#define MAX 5
+#define MAX 15
 
 typedef struct{
 	int elementos[MAX]; // PILHA ESTATICA
@@ -26,7 +26,7 @@ TPilha * criar_pilha(){
 // EMPILHAR ELEMENTO
 void empilhar(TPilha *ppilha, int valor){
 	int i = ppilha->topo;
-    if(i == 5)
+    if(i == 15)
     {
         printf("A pilha está cheia, não é possível empilhar.\n");
         printf("Aperte ENTER para continuar...");
